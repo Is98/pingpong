@@ -11,12 +11,18 @@ import common.*;
 class S_ActiveModel implements Runnable
 {
   S_PongModel pongModel;
+  private long start;
+  private long end;
+  private long nStart;
+  private long nEnd;
 
   public S_ActiveModel( S_PongModel aPongModel )
   {
     DEBUG.assertTrue( aPongModel != null,
                       "ActiverModel constructor param null" );
     pongModel = aPongModel;
+    start = 0;
+    end = 0;
   }
 
   /**
@@ -59,14 +65,36 @@ class S_ActiveModel implements Runnable
           ball.changeDirectionX();
         }
 
+        if(nStart < nEnd){
+        	start = nStart;
+        	end = nEnd;
+        }
+        
+        long delay = (end - start)/2000000;
+        
         pongModel.modelChanged();      // Model changed refresh screen
-
-        Thread.sleep( 20 );            // About 50 Hz
+        
+        if(delay < 20){
+        	Thread.sleep( 20 - delay);            // About 50 Hz
+        }
+        
       }
     } catch ( Exception e )
     {
       DEBUG.trace( "ActimeModel.run %s", e.getMessage() );
     }
+  }
+  
+  public void setNStart(long s){
+	  nStart = s;
+  }
+  
+  public void setNEnd(long e){
+	  nEnd = e;
+  }
+  
+  public double getPing(){
+	  return (end - start);
   }
 
 }

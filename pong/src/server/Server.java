@@ -71,6 +71,27 @@ class Server
     DEBUG.trace( "Server.makeContactWithClients" );
     // ERASED code to make contact with both players
     // and creating instance of the active object S_Player
+    try
+    {
+      Socket socket0  = ss.accept();   //  Wait for connection 
+      NetStringReader in0 = new NetTCPReader(socket0);     // Input 
+      leftBat = new NetTCPWriter(socket0);                 // Output
+      
+      S_Player p0 = new S_Player( 0, model, in0 );
+    
+      Socket socket1  = ss.accept();   //  Wait for connection 
+      NetStringReader in1 = new NetTCPReader(socket1);     // Input 
+      rightBat = new NetTCPWriter(socket1);                 // Output
+      
+      S_Player p1 = new S_Player( 1, model, in1 );
+      
+      p0.start(); p1.start();
+      
+    } catch ( Exception e )
+    {
+    	DEBUG.error("server makeContactWithClients\n %s", e.getMessage() );
+    }
+    
   }
 }
 
