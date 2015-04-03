@@ -1,6 +1,8 @@
 package server;
 
+import java.io.EOFException;
 import java.net.*;
+
 import static common.Global.*;
 import common.*;
 
@@ -24,10 +26,10 @@ class S_Player extends Thread
    */
   public S_Player( int player, S_PongModel model, NetStringReader in )
   {
-    this.model     = model;
-    playerNum      = player;
-    theIn          = in;
-    DEBUG.trace( "PlayerS.constuctor %d", playerNum );
+    this.model       = model;
+    this.playerNum   = player;
+    this.theIn       = in;
+    DEBUG.trace( "PlayerS.constuctor %d %s %s", playerNum, model, in );
   }
 
 
@@ -50,20 +52,51 @@ class S_Player extends Thread
     {
       while ( true )                           // Loop
       {
-        String move = theIn.get();             // From Client
+    	String move = theIn.get();				// From Client
         if ( move == null ) break;             // No more data
         DEBUG.trace( "S Move %s", move );
 
-        GameObject bat = model.getBat(playerNum);
+        //GameObject bat = model.getBat(playerNum);
         // ERASED code to process bat movement
+        // know player 
+        if ( move.equals( "up") )
+        {
+          model.moveBat(playerNum, -10);  //was -3
+        } else {
+          model.moveBat(playerNum, 10);
+        }
+        
+        
       }
+//----------------------
+      while ( true )                           // Loop
+      {
+      	String move = theIn.get();				// From Client
+        if ( move == null ) break;             // No more data
+        DEBUG.trace( "S Move %s", move );
 
+        //GameObject bat = model.getBat(playerNum);
+        // ERASED code to process bat movement
+        // know player 
+        if ( move.equals( "right") )                             // the right key going down
+        {
+          model.moveBat(playerNum, -5);  //was -3
+        } else {
+          model.moveBat(playerNum, 5);
+        }
+        
+        
+      }
+  //---------------    
+      
+     
+      
       theIn.close();                            // Close Read
       theOut.close();                           // Close Write
 
       theSocket.close();                        // Close Socket
     }
-    catch ( Exception err )
+    catch (Exception err)
     {
       DEBUG.error( "PlayerS.run [%d]\n%s",
                    playerNum, err.getMessage() );
