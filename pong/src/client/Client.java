@@ -55,7 +55,7 @@ class Client
     //  of the game from the server
     C_Player player = null;
     // Socket used to connect to server
-    //Socket s;
+    Socket s;
     try
     {
       switch ( role )
@@ -63,14 +63,6 @@ class Client
         case "TCP" :
           DEBUG.trace( "Client.makeContactWithServer TCP" );
           // ERASED code to set up TCP connection and instance of C_Player
-          
-          Socket socket = new Socket( TCP_SERVER_ADDR, TCP_PORT );// Socket  
-
-          player = new C_Player( model, socket ) ;
-          
-          
-          cont.setWriter( player.getWriter() );
-          
           DEBUG.assertTrue( player!=null,
                         "Client.makeContactWithPlayer " +
                         "No Player object created" );

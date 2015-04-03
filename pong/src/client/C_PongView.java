@@ -31,7 +31,6 @@ class C_PongView extends JFrame implements Observer
   private C_PongController pongController;
   private GameObject   ball;
   private GameObject[] bats;
-  private double ping;
 
   public C_PongView( String name )
   {
@@ -52,7 +51,6 @@ class C_PongView extends JFrame implements Observer
     ball  = model.getBall();
     bats  = model.getBats();
     name  = model.getGameName();
-    ping  = model.getPing();
     DEBUG.trace( "C_PongView.update" );
     repaint();                              // Re draw game
   }
@@ -131,8 +129,6 @@ class C_PongView extends JFrame implements Observer
                                       bats[1].getX(), bats[1].getY(),
                                       name );
     g.drawString( text, W/2-fm.stringWidth(text)/2, (int)M*2 );
-    String pingS = "Ping delay: " + ping;
-    g.drawString(pingS, W/2-fm.stringWidth(pingS)/2, (int)M*4);
 
     // The ball at the current x, y position (width, height)
 

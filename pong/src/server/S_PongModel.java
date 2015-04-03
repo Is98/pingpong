@@ -11,18 +11,16 @@ import java.util.Observable;
  */
 public class S_PongModel extends Observable
 {
-  private GameObject ball   = new GameObject( W/2, H/2, BALL_SIZE, BALL_SIZE ); //ball size
+  private GameObject ball   = new GameObject( W/2, H/2, BALL_SIZE, BALL_SIZE );
   private GameObject bats[] = new GameObject[2];
-  private S_ActiveModel aModel;
 
   private Thread activeModel;
 
   public S_PongModel()
   {
-    bats[0] = new GameObject(  60, H/2, BAT_WIDTH, BAT_HEIGHT);  // bats position
+    bats[0] = new GameObject(  60, H/2, BAT_WIDTH, BAT_HEIGHT);
     bats[1] = new GameObject(W-60, H/2, BAT_WIDTH, BAT_HEIGHT);
-    aModel =  new S_ActiveModel( this );
-    activeModel = new Thread(aModel);
+    activeModel = new Thread( new S_ActiveModel( this ) );
   }
 
   /**
@@ -31,10 +29,6 @@ public class S_PongModel extends Observable
   public void makeActiveObject()
   {
     activeModel.start();
-  }
-  
-  public S_ActiveModel getActiveModel(){
-	 return aModel;
   }
 
   /**
@@ -82,11 +76,6 @@ public class S_PongModel extends Observable
   public void setBat( int player, GameObject theBat )
   {
     bats[player] = theBat;
-  }
-  
-  public void moveBat( int player, int distance )
-  {
-	 bats[player].moveY( distance );
   }
 
   /**
