@@ -13,6 +13,7 @@ public class S_PongModel extends Observable
 {
   private GameObject ball   = new GameObject( W/2, H/2, BALL_SIZE, BALL_SIZE ); //ball size
   private GameObject bats[] = new GameObject[2];
+  private S_ActiveModel aModel;
 
   private Thread activeModel;
 
@@ -20,7 +21,8 @@ public class S_PongModel extends Observable
   {
     bats[0] = new GameObject(  60, H/2, BAT_WIDTH, BAT_HEIGHT);  // bats position
     bats[1] = new GameObject(W-60, H/2, BAT_WIDTH, BAT_HEIGHT);
-    activeModel = new Thread( new S_ActiveModel( this ) );
+    aModel =  new S_ActiveModel( this );
+    activeModel = new Thread(aModel);
   }
 
   /**
@@ -29,6 +31,10 @@ public class S_PongModel extends Observable
   public void makeActiveObject()
   {
     activeModel.start();
+  }
+  
+  public S_ActiveModel getActiveModel(){
+	 return aModel;
   }
 
   /**
