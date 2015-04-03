@@ -1,4 +1,5 @@
 package common;
+
 /**
  * Print information about the running program
  *  @author Mike Smith University of Brighton
@@ -26,7 +27,7 @@ public class DEBUG
    *  @param fmt  The same as printf etc
    *  @param params parameters interpolated into the string
    */
-  public static void trace(String fmt, Object... params )
+  public static void trace( String fmt, Object... params )
   {
     if ( debug )
     {
@@ -78,4 +79,3 @@ public class DEBUG
   }
 
 }
-

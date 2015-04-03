@@ -1,27 +1,32 @@
 package common;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.net.*;
 import java.net.Socket;
 
 /**
- * Wrapper for writing Strings to a socket
+ * TCP writer
+ *  implemented by using ObjectOutputStream
  */
-
-public class NetTCPWriter extends ObjectOutputStream implements NetStringWriter
+public class NetTCPWriter extends ObjectOutputStream 
+                          implements NetStringWriter
 {
   /**
-   * @param s Socket to write to.
-   * @throws IOException when can not create the connection
+   * Constructor
+   * @param s Socket endpoint for communication
    */
   public NetTCPWriter( Socket s ) throws IOException
   {
     super( s.getOutputStream() );
-    DEBUG.traceA( "new NetTCPStringWriter()" );
+    DEBUG.traceA( "new NetTCPWriter()" );
     s.setTcpNoDelay(true);              // Send data immediately
   }
 
-  // write object to socket returning false on error
+  /**
+   * Write a string to a socket
+   * @param data The string to be written
+   * @return result of writing
+   */
   public synchronized boolean put( String data )
   {
     try
@@ -36,7 +41,10 @@ public class NetTCPWriter extends ObjectOutputStream implements NetStringWriter
       return false;                           // Failed write
     }
   }
-
+  
+  /**
+   * Close the stream to the socket
+   */
   public void close()
   {
     try
@@ -48,4 +56,3 @@ public class NetTCPWriter extends ObjectOutputStream implements NetStringWriter
     }
   }
 }
-

@@ -1,10 +1,11 @@
 package common;
 
-import java.net.*;
 import java.io.*;
+import java.net.*;
+import java.net.Socket;
 
 /**
- * Datagram writer
+ * Multicast writer
  */
 public class NetMCWriter implements NetStringWriter
 {
@@ -13,9 +14,9 @@ public class NetMCWriter implements NetStringWriter
   private int             port   = 0;
 
   /**
-   * @param aPort Port to write to
-   * @param mca   Multicast address
-   * @throws IOException when can not create the connection
+   * Constructor
+   * @param aPort port number
+   * @param mca Multicast Address of host
    */
   public NetMCWriter(int aPort, String mca) throws IOException
   {
@@ -23,9 +24,12 @@ public class NetMCWriter implements NetStringWriter
     DEBUG.traceA( "NetMCWrite: port [%5d] MCA [%s]", port, mca );
     socket = new MulticastSocket( port );
     group  = InetAddress.getByName( mca );
-    socket.setTimeToLive(40); 
+    socket.setTimeToLive(40);          // Live for 40 hops
   }
 
+  /**
+   * Close the stream to the socket
+   */
   public void close()
   {
     try
@@ -34,10 +38,16 @@ public class NetMCWriter implements NetStringWriter
       socket.close();
     } catch ( Exception e )
     {
-	  DEBUG.error("NetTCPReader.close %s", e.getMessage() );
-	}
+      DEBUG.error("NetTCPReader.close %s", e.getMessage() );
+    }
   }
 
+  /**
+   * Write a string using Multicast, 
+   *  assumed that the string will fit in a single datagram
+   * @param message String to be written
+   * @return result of operation
+   */
   public synchronized boolean put( String message )
   {
     try

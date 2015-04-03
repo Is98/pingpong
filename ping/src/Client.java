@@ -1,41 +1,43 @@
-package Pingtime;
-
 import java.net.*;
 import java.util.*;
 
 import common.*;
 
+@SuppressWarnings("unused")
 class Client
 {
   public static void main( String args[] )
   {
     System.out.println( "Client" );
-    final String host = "localhost";           // Host name  
-    final int    port = 50001;                 // Port used  was 50000
+    final String host = "localhost";           // Host name 
+    final int    port = 1987;                 // Port used 
 
     try
     {
-      NetStringWriter out;                     // String output 
-      NetStringReader in;                      // String input 
+      NetStringWriter out;                     // String output
+      NetStringReader in;                      // String input
 
-      Socket socket = new Socket( host, port );// Socket  
+      Socket socket = new Socket( host, port );// Socket 
 
-      out = new NetTCPWriter( socket );        // Output  
-      in  = new NetTCPReader( socket );        // Input  
+      out = new NetTCPWriter( socket );        // Output 
+      in  = new NetTCPReader( socket );        // Input 
 
-      for (int i= 0; i<args.length; i++)       // Send messages  
+      for (int i= 0; i<args.length; i++)       // Send messages 
       {
-        out.put( args[i] );                    //   to Server  
-        String response = in.get();            //   Response  
-        if ( response == null ) break;         // Failure  
+        out.put( args[i] );                    //   to Server 
+        String response = in.get();            //   Response 
+        if ( response == null ) break;         // Failure 
         System.out.printf("Length of [%s] is %s\n",
                            args[i], response );
       }
-      out.close();                             // Close stream 
+     
+      out.close();                             // Close stream
+      in.close();
     }
     catch ( Exception e )
     {
       DEBUG.error("Error:\n%s", e.getMessage() );
     }
+    
   }
 }

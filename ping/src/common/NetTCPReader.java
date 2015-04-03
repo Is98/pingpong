@@ -1,38 +1,47 @@
 package common;
 
 import java.io.*;
+import java.net.*;
 import java.net.Socket;
 
 /**
- * Wrapper to allow reading of Strings from a socket
+ * TCP reader
+ *  implemented by using ObjectInputStream
  */
-
-public class NetTCPReader extends ObjectInputStream implements NetStringReader
+public class NetTCPReader extends ObjectInputStream 
+                          implements NetStringReader
 {
   /**
-   * @param s Socket to read from
-   * @throws IOException when can not create the connection
+   * Constructor
+   * @param s Socket endpoint for communication
    */
   public NetTCPReader( Socket s ) throws IOException
   {
     super( s.getInputStream() );
-    DEBUG.traceA( "new NetTCPStringReader()" );
+    DEBUG.traceA( "new NetTCPReader()" );
   }
 
-  // Get object return null on  'error'
-  public synchronized String get()           // Get object from stream
+  /**
+   * Read a string from a socket
+   * @return string read or null if error
+   */
+  public synchronized String get()      //
   {
-    try                                      //
+    try                                 //
     {
-      return (String) readObject();          // Return read object
+      return (String) readObject();     // Return read object
     }
-    catch ( Exception e )                    // Reading error
+    catch ( Exception e )               // Reading error
     {
-      DEBUG.error("NetObjectReader.get %s", e.getMessage() );
-      return null;                           //  On error return null
+      //DEBUG.error("NetObjectReader.get %s", 
+      //                    e.getMessage() );
+      return null;                      //  On error return null
     }
   }
-
+  
+  /**
+   * Close the stream to the socket
+   */
   public void close()
   {
     try
@@ -44,5 +53,3 @@ public class NetTCPReader extends ObjectInputStream implements NetStringReader
     }
   }
 }
-
-

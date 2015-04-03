@@ -1,8 +1,13 @@
 package common;
 
-import java.net.*;
 import java.io.*;
+import java.net.*;
+import java.net.Socket;
 
+/**
+ * Multicast writer
+ *   IP Range 224.0.0.0 to 239.255.255.255
+ */
 public class NetMCReader implements NetStringReader
 {
   private MulticastSocket socket = null;
@@ -10,9 +15,9 @@ public class NetMCReader implements NetStringReader
   private int             port   = 0;
 
   /**
-   * @param aPort Port to read from
-   * @param mca   Multicast address
-   * @throws IOException when can not create the connection
+   * Constructor
+   * @param aPort port number
+   * @param mca Multicast Address of server
    */
   public NetMCReader(int aPort, String mca ) throws IOException
   {
@@ -23,6 +28,9 @@ public class NetMCReader implements NetStringReader
     socket.joinGroup(group);
   }
 
+  /**
+   * Close the stream to the socket
+   */
   public void close()
   {
     try
@@ -31,16 +39,20 @@ public class NetMCReader implements NetStringReader
       socket.close();
     } catch ( Exception e )
     {
-      DEBUG.error("NetTCPReader.close %s", e.getMessage() );
+      DEBUG.error("NetMCReader.close %s", e.getMessage() );
     }
   }
 
+  /**
+   * Read a string from a multicast socket
+   * @return string read or null if error
+   */
   public synchronized String get()
   {
     try
     {
       DEBUG.trace("MCRead: on port [%d]", port );
-      byte[] buf = new byte[512];
+      byte[] buf = new byte[1400];
       DatagramPacket packet = new DatagramPacket(buf, buf.length);
       socket.receive(packet);
 
