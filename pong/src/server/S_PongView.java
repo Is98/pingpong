@@ -17,6 +17,7 @@ class S_PongView implements Observer {
 	private NetStringWriter mc = null;
 	private int gameNumber = 0;
 
+	
 	/**
 	 * Constructor
 	 */
@@ -27,11 +28,11 @@ class S_PongView implements Observer {
 
 	public void setStreams(NetStringWriter c1, NetStringWriter c2,
 			NetStringWriter mc) {
-		DEBUG.assertTrue(c1 != null && c2 != null && mc != null,
-				"S_PongView.setStreams - c1,c2  or c3 null");
+		DEBUG.assertTrue(c1 != null && c2 != null, // && mc != null,
+				"S_PongView.setStreams - c1 or c2 null");  // or c3 null");
 		left = c1;
 		right = c2;
-		this.mc = mc;
+		//this.mc = mc;
 	}
 
 	public void setStreams(NetStringWriter mc) {
@@ -59,6 +60,22 @@ class S_PongView implements Observer {
 
 		// ERASED code to send position of game objects to the client
 		// as the model on the server has changed
+		String output = 
+				String.format( "%6.2f %6.2f %6.2f %6.2f %6.2f %6.2f %6.2f",
+						bats[0].getX(),	//pos0
+						bats[0].getY(), //pos1
+						bats[1].getX(), //pos2
+						bats[1].getY(), //pos3
+						ball.getX(), 	//pos4
+						ball.getY(), 	//pos5
+						model.getActiveModel().getPing() //pos6.
+				);
+		
+		left.put( output );
+		right.put( output );
+		model.getActiveModel().setPingStart(System.nanoTime());
+
 	}
 
+	
 }

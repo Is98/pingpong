@@ -4,7 +4,6 @@ import common.*;
 
 import java.awt.event.KeyEvent;
 
-//import common.GameObject;
 /**
  * Pong controller, handles user interactions
  */
@@ -44,9 +43,11 @@ public class C_PongController {
 			break;
 		case -KeyEvent.VK_UP: // Up arrow
 			// ERASED code to send to server
+			server.put("up");
 			break;
 		case -KeyEvent.VK_DOWN: // Down arrow
 			// ERASED code to send to server
+			server.put("down");
 			break;
 		}
 	}
