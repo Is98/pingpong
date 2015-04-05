@@ -60,9 +60,9 @@ class S_Player extends Thread
         if (move.equals("Change made")){
 			model.getActiveModel().setPingFinish(System.nanoTime());
         } else if ( move.equals( "up") ) {
-        	model.moveBat(playerNum, -5);
+        	model.moveBat(playerNum, (int) -BAT_MOVE);
 		} else {
-			model.moveBat(playerNum, 5);
+			model.moveBat(playerNum, (int) BAT_MOVE);
 		}
       }
 

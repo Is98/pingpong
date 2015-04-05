@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
  * Pong controller, handles user interactions
  */
 public class C_PongController {
+	@SuppressWarnings("unused")
 	private C_PongModel model;
 	private C_PongView view;
 	private NetStringWriter server = null;

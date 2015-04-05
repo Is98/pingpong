@@ -1,6 +1,6 @@
 package server;
 
-import common.*;
+//import common.*;
 
 /**
  * Pong controller Not used currently. But there could be a management console
@@ -8,7 +8,9 @@ import common.*;
  */
 
 public class S_PongController {
+	@SuppressWarnings("unused")
 	private S_PongModel model;
+	@SuppressWarnings("unused")
 	private S_PongView view;
 
 	public S_PongController(S_PongModel aPongModel, S_PongView aPongView) {

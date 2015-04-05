@@ -9,12 +9,14 @@ import java.util.Observer;
  * Displays a graphical view of the game of pong
  */
 class S_PongView implements Observer {
-	private S_PongController pongController;
+	//private S_PongController pongController;
 	private GameObject ball;
 	private GameObject[] bats;
 	private NetStringWriter left = null;
 	private NetStringWriter right = null;
+	@SuppressWarnings("unused")
 	private NetStringWriter mc = null;
+	@SuppressWarnings("unused")
 	private int gameNumber = 0;
 
 	

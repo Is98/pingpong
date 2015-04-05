@@ -13,7 +13,7 @@ class C_Player extends Thread {
 	private NetStringReader theIn = null; // Input stream
 	private NetStringWriter theOut = null; // Output stream
 	private C_PongModel model;
-	private int gameToView = 0; // 1 or more
+	//private int gameToView = 0; // 1 or more
 
 	/**
 	 * Constructor
@@ -117,13 +117,17 @@ class C_Player extends Thread {
 				  // move ball to new position
 				  ball.setX( received[4] ); 
 				  ball.setY( received[5] );
-				  // Send ping time
-				  model.setPing(received[6]);
+				  // save ping time
+				  model.setServerPing((long) received[6]);
 				  
 				} catch ( Exception e ) {
 					DEBUG.error( "PlayerC.run - Game Position \n %s", e.getMessage() );
 				}
 				//update the view
+				if (model.getMyPing() < model.getServerPing() ) {
+					long pingdifference = model.getServerPing() - model.getMyPing();
+					Thread.sleep(pingdifference / 2000000);
+				}
 				model.modelChanged();
 			}
 
