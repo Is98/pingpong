@@ -1,6 +1,7 @@
 package server;
 
 import java.net.*;
+
 import static common.Global.*;
 import common.*;
 
@@ -54,8 +55,15 @@ class S_Player extends Thread
         if ( move == null ) break;             // No more data
         DEBUG.trace( "S Move %s", move );
 
-        GameObject bat = model.getBat(playerNum);
+        //GameObject bat = model.getBat(playerNum);
         // ERASED code to process bat movement
+        if (move.equals("Change made")){
+			model.getActiveModel().setPingFinish(System.nanoTime());
+        } else if ( move.equals( "up") ) {
+        	model.moveBat(playerNum, (int) -BAT_MOVE);
+		} else {
+			model.moveBat(playerNum, (int) BAT_MOVE);
+		}
       }
 
       theIn.close();                            // Close Read

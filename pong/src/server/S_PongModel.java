@@ -14,13 +14,16 @@ public class S_PongModel extends Observable
   private GameObject ball   = new GameObject( W/2, H/2, BALL_SIZE, BALL_SIZE );
   private GameObject bats[] = new GameObject[2];
 
+  private S_ActiveModel actModel;
+  
   private Thread activeModel;
 
   public S_PongModel()
   {
     bats[0] = new GameObject(  60, H/2, BAT_WIDTH, BAT_HEIGHT);
     bats[1] = new GameObject(W-60, H/2, BAT_WIDTH, BAT_HEIGHT);
-    activeModel = new Thread( new S_ActiveModel( this ) );
+    actModel =  new S_ActiveModel( this );
+    activeModel = new Thread( actModel );
   }
 
   /**
@@ -30,6 +33,11 @@ public class S_PongModel extends Observable
   {
     activeModel.start();
   }
+  
+  public S_ActiveModel getActiveModel(){
+    return actModel;
+  }
+
 
   /**
    * Return the Game object representing the ball
@@ -78,6 +86,10 @@ public class S_PongModel extends Observable
     bats[player] = theBat;
   }
 
+  public void moveBat(int player, int distance) {
+		bats[player].moveY( distance );
+	}
+
   /**
    * Cause update of view of game
    */
@@ -87,4 +99,6 @@ public class S_PongModel extends Observable
     setChanged(); notifyObservers();
   }
 
+
+  
 }

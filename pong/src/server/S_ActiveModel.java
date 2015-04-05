@@ -11,6 +11,8 @@ import common.*;
 class S_ActiveModel implements Runnable
 {
   S_PongModel pongModel;
+  double pingStart;
+  double pingFinish;
 
   public S_ActiveModel( S_PongModel aPongModel )
   {
@@ -18,7 +20,8 @@ class S_ActiveModel implements Runnable
                       "ActiverModel constructor param null" );
     pongModel = aPongModel;
   }
-
+  
+  
   /**
    * Code to position the ball after time interval
    * runs as a separate thread
@@ -65,9 +68,24 @@ class S_ActiveModel implements Runnable
       }
     } catch ( Exception e )
     {
-      DEBUG.trace( "ActimeModel.run %s", e.getMessage() );
+      DEBUG.trace( "ActiveModel.run %s", e.getMessage() );
     }
   }
 
+  public void setPingStart (long ping)
+  {
+	  pingStart = ping;
+  }
+  
+  public void setPingFinish (long ping)
+  {
+	  pingFinish = ping;
+  }
+  
+  public double getPing () 
+  {
+	  return pingFinish - pingStart;
+  }
+  
 }
 

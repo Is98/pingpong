@@ -12,6 +12,8 @@ public class C_PongModel extends Observable
   private GameObject ball   = new GameObject( W/2, H/2, BALL_SIZE, BALL_SIZE );
   private GameObject bats[] = new GameObject[2];
   private String     gameName = "+";
+  private long	 myPing;	
+  private long 	 serverPing;
 
 
   public C_PongModel()
@@ -83,5 +85,26 @@ public class C_PongModel extends Observable
   {
     setChanged(); notifyObservers();
   }
+  
+  public void setMyPing(long ping)
+  {
+	myPing = ping;
+  }
+  
+  public long getMyPing()
+  {
+	return myPing;
+  }
 
+  public long getServerPing() 
+  {
+	return serverPing;
+  }
+  
+  public void setServerPing(long ping)
+  {
+	  serverPing = ping;
+  }
+  
+  
 }
