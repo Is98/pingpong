@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JFrame;
 
 import java.util.Observable;
@@ -19,6 +18,7 @@ import java.util.Observer;
 
 import common.DEBUG;
 import common.GameObject;
+
 import static common.Global.*;
 
 /**
@@ -31,12 +31,7 @@ class C_PongView extends JFrame implements Observer
   private C_PongController pongController;
   private GameObject   ball;
   private GameObject[] bats;
-  private double serverping;
-  @SuppressWarnings("unused")
-  private double myping;
-  @SuppressWarnings("unused")
-  private double differenceinping;
-  
+
   public C_PongView( String name )
   {
     setSize( W, H );                        // Size of window
@@ -56,11 +51,6 @@ class C_PongView extends JFrame implements Observer
     ball  = model.getBall();
     bats  = model.getBats();
     name  = model.getGameName();
-    serverping = model.getServerPing();
-    myping = model.getMyPing();
-    long pingdifference = model.getServerPing() - model.getMyPing();
-    differenceinping = pingdifference / 2000000;
-    
     DEBUG.trace( "C_PongView.update" );
     repaint();                              // Re draw game
   }
@@ -139,16 +129,7 @@ class C_PongView extends JFrame implements Observer
                                       bats[1].getX(), bats[1].getY(),
                                       name );
     g.drawString( text, W/2-fm.stringWidth(text)/2, (int)M*2 );
-    //server ping
-    String pingtext = "Server ping:	" + serverping;
-    g.drawString(pingtext, W/2-fm.stringWidth(pingtext)/2, (int)M*12);
-    //client ping
-    pingtext = "Client ping:	" + serverping;
-    g.drawString(pingtext, W/2-fm.stringWidth(pingtext)/2, (int)M*13);
-    //difference in ping
-    pingtext = "Difference in ping:	" + serverping;
-    g.drawString(pingtext, W/2-fm.stringWidth(pingtext)/2, (int)M*14);
-    
+
     // The ball at the current x, y position (width, height)
 
     g.setPaint( Color.red );

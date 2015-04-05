@@ -54,6 +54,8 @@ class Client
     // Also starts the Player task that get the current state
     //  of the game from the server
     C_Player player = null;
+    // Socket used to connect to server
+    Socket s;
     try
     {
       switch ( role )
@@ -61,24 +63,13 @@ class Client
         case "TCP" :
           DEBUG.trace( "Client.makeContactWithServer TCP" );
           // ERASED code to set up TCP connection and instance of C_Player
-          
-          //Setup TCP socket
-          Socket socket = new Socket( TCP_SERVER_ADDR, TCP_PORT );
-          //player is an instance of C player
-          player = new C_Player( model, socket);
-          cont.setWriter( player.getWriter() );
-          
           DEBUG.assertTrue( player!=null,
                         "Client.makeContactWithPlayer " +
                         "No Player object created" );
           player.start();
           break;
-          
-        default :
           // ERASED code to process Observer and MC connection
           //             not required for TCP connection
-          DEBUG.trace( "Non TCP connection request" );
-          break;
       }
     }
     catch ( Exception err )
